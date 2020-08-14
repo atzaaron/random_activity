@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:quiver/async.dart';
 import 'package:flutter/material.dart';
 import 'package:random_activity/activity.dart';
-import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -77,16 +76,29 @@ class _HomePage extends State<HomePageController> {
     );
   }
 
-  void startRandomActivity() {
+  Future startRandomActivity() {
     int currentHour = DateTime.now().hour;
-    Activity currentActivity;
+    // Activity currentActivity;
   
     //morning sport
-    if (currentHour > 9 && currentHour < 18)
-      currentActivity = new Activity(ACTIVITY.values[Random().nextInt(ACTIVITY.values.length)]);
-    else
-      currentActivity = new Activity(ACTIVITY.values[Random().nextInt(ACTIVITY.values.length) % 3]);
-    currentActivity.launchActivity();
+    if (currentHour > 9 && currentHour < 18) {
+      // currentActivity = new Activity(ACTIVITY.values[Random().nextInt(ACTIVITY.values.length)]);
+      return (
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ActivityPageController(ACTIVITY.values[Random().nextInt(ACTIVITY.values.length)]))
+        )
+      );
+    } else {
+      return (
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ActivityPageController(ACTIVITY.values[Random().nextInt(ACTIVITY.values.length) % 3]))
+        )
+      );
+      // currentActivity = new Activity(ACTIVITY.values[Random().nextInt(ACTIVITY.values.length) % 3]);
+    }
+    // currentActivity.launchActivity();
   }
 
   void launchInfoBar() {

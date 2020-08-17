@@ -6,10 +6,9 @@ import 'package:flutter/material.dart';
 
 class ActivityPage extends StatelessWidget {
   final ACTIVITY activity;
+  final String title;
 
-  ActivityPage(this.activity) {
-    print(this.activity);
-  }
+  ActivityPage(this.activity) : title = activity.toString().replaceAll("ACTIVITY.", "");
 
   @override
   Widget build(BuildContext context) {
@@ -19,53 +18,48 @@ class ActivityPage extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Color(0xFF182041),
         ),
-        body: displayActivity()
+        body: displayActivity(context)
       ),
       onWillPop: () async {
-        Navigator.pop(context, false);
+        Navigator.pop(context, true);
         return false;
       },
     );
   }
 
-  Container displayActivity() {
+  Container displayActivity(BuildContext context) {
     return Container(
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 30),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[Image.asset('assets/images/abs.png', width: 75, height: 75,)],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[Text(
-                  'ABS TIME !',
-                  style: TextStyle(fontSize: 30.0, color: Colors.grey[300])
-                )],
+          padding: EdgeInsets.all(20.0),
+          child: Card(
+            elevation: 10.0,
+            color: Color(0xFF1c2754),
+            child: Container(
+              padding: EdgeInsets.all(30.0),
+              height: 300,
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('assets/images/' + this.title.toLowerCase() + '.png', width: 75, height: 75),
+                  SizedBox(height: 10),
+                  Text(
+                    this.title,
+                    style: TextStyle(fontSize: 30.0, color: Colors.grey[300])
+                  ),
+                  SizedBox(height: 75),
+                  RaisedButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: Text('Done !'),
+                    color: Colors.grey[300],
+                    textColor: Colors.blue,
+                  )
+                ],
               )
-            ],
+            )
           )
     );
   }
 }
-
-// class _ActivityPage extends State<ActivityPageController> {
-//   String title;
-//   bool isDayActivity;
-//   ACTIVITY activity;
-//   int series;
-//   int repetitions;
-//   Duration duration;
-//   DIFFICULTY difficulty; //the difficulty have to be wrote in json file and retrieve via function in this class
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-
-//     );
-//   }
-// }
 
 // class Activity {
 //   String title;

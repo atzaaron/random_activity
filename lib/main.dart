@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:quiver/async.dart';
 import 'package:flutter/material.dart';
 import 'package:random_activity/activity.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,6 +11,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
       title: 'Random Activity App',
       theme: ThemeData(
@@ -41,7 +46,7 @@ class _HomePage extends State<HomePageController> {
 
   void startTimer() {
     CountdownTimer countDownTimer = new CountdownTimer(
-      new Duration(seconds: 2),
+      new Duration(seconds: 10),
       new Duration(seconds: 1),
     );
     StreamSubscription<CountdownTimer> sub = countDownTimer.listen(null);
@@ -173,3 +178,11 @@ enum ACTIVITY {
 }
 
 enum DIFFICULTY { ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN }
+
+class Activity {
+  String title;
+  int series;
+  int repetitions;
+  Duration duration;
+  String pathImage;
+}
